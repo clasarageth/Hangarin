@@ -361,9 +361,20 @@
 
                     <!-- Content Row -->
                     <div class="card shadow mb-4">
+
                         <div class="card-body">
                             <div class="table-responsive">
+
+                                <!-- Add Task Button (Right Side) -->
+                                <div class="d-flex justify-content-end mb-3">
+                                    <a href="{% url 'task-add' %}" class="btn btn-primary ">
+                                       
+                                        <span class="text">Add Task</span>
+                                    </a>
+                                </div>
+
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
                                     <thead>
                                         <tr>
                                             <th>Title</th>
@@ -372,7 +383,9 @@
                                             <th>Priority</th>
                                             <th>Category</th>
                                         </tr>
-                                       <tbody>
+                                    </thead>
+
+                                    <tbody>
                                         {% for object in object_list %}
                                         <tr>
                                             <td>{{ object.title }}</td>
@@ -380,11 +393,16 @@
                                             <td>{{ object.deadline }}</td>
                                             <td>{{ object.priority }}</td>
                                             <td>{{ object.category }}</td>
+                                        </tr>
                                         {% endfor %}
-                                       </tbody>
+                                    </tbody>
+
                                 </table>
+
                             </div>
                         </div>
+
+</div>
                     
             </div>
             <!-- End of Main Content -->
