@@ -23,3 +23,10 @@ class TaskCreateView(CreateView):
     form_class = TaskForm
     template_name = 'task_form.html'
     success_url = reverse_lazy('task-list')
+
+
+class TaskUpdateView(UpdateView):
+    model = Task 
+    form_class = TaskForm
+    template_name = 'task_form.html'
+    success_url = reverse_lazy('task-list')
