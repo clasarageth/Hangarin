@@ -13,10 +13,6 @@ class TaskListView(ListView):
     context_object_name = 'tasks'
 
 
-class SubtaskView(ListView):
-    model = SubTask
-    template_name = 'task_list.html'
-    context_object_name = 'subtasks'
 
 class TaskCreateView(CreateView):
     model = Task
@@ -30,3 +26,8 @@ class TaskUpdateView(UpdateView):
     form_class = TaskForm
     template_name = 'task_form.html'
     success_url = reverse_lazy('task-list')
+
+class SubTaskListView(ListView):
+    model = SubTask
+    template_name = 'subtasks_list.html'
+    context_object_name = 'subtasks'

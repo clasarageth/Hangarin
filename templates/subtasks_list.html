@@ -55,11 +55,12 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>My Tasks</span></a>
             </li>
-             <li class="nav-item active">
+            <li class="nav-item active">
                 <a class="nav-link" href="{% url 'subtask-list' %}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Sub Tasks</span></a>
             </li>
+            
             
 
             
@@ -279,7 +280,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">My Tasks</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Sub Tasks</h1>
                     </div>
 
                 
@@ -293,15 +294,19 @@
 
                                     <thead>
                                         <tr>
+                                            <th>Title</th>
+                                            <th>Status</th>
+                                            <th></th>
                                         </tr>
-                                        <tr></tr>
+                                        
                                     </thead>
 
                                     <tbody>
                                         {% for object in object_list %}
                                         <tr>
                                             <td>{{ object.title }}</td>
-                                            <td><a href="task_list/{{ object.id }}" class="btn btn-primary btn-sm">View</a></td>
+                                            <td>{{ object.status }}</td>
+                                            <td><a href="#" class="btn btn-primary btn-sm">View</a></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
