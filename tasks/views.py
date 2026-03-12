@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Task, SubTask
-from .forms import TaskForm, SubTaskForm
+from .models import Task, SubTask, Note
+from .forms import TaskForm, SubTaskForm, NoteForm
 
 # Create your views here.
 
@@ -37,3 +37,14 @@ class SubTaskUpdateView(UpdateView):
     form_class = SubTaskForm
     template_name = 'subtasks_form.html'
     success_url = reverse_lazy('subtask-list')
+
+class NotesListView(ListView):
+    model = Note
+    template_name = 'notes_list.html'
+    context_object_name = 'notes'
+
+class NotesUpdateView(UpdateView):
+    model = Note
+    form_class = NoteForm
+    template_name = 'notes_form.html'
+    success_url = reverse_lazy('notes-list')

@@ -44,8 +44,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-             <li class="nav-item active">
+            <li class="nav-item active">
                 <a class="nav-link" href="{% url 'task-add' %}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Add New Task</span></a>
@@ -65,6 +64,7 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Notes</span></a>
             </li>
+            
 
             
             
@@ -283,7 +283,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">My Tasks</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Notes</h1>
                     </div>
 
                 
@@ -296,16 +296,15 @@
                                 <table class="table " id="dataTable" width="100%" cellspacing="0">
 
                                     <thead>
-                                        <tr>
-                                        </tr>
+                                        <tr>Content</tr>
                                         <tr></tr>
                                     </thead>
 
                                     <tbody>
                                         {% for object in object_list %}
                                         <tr>
-                                            <td>{{ object.title }}</td>
-                                            <td><a href="task_list/{{ object.id }}" class="btn btn-primary btn-sm">View</a></td>
+                                            <td>{{ object.content }}</td>
+                                            <td><a href="/notes_list/{{ object.id }}" class="btn btn-primary btn-sm">View</a></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>

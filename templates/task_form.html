@@ -45,7 +45,7 @@
 
             <!-- Nav Item - Dashboard -->
 
-            <li class="nav-item active">
+           <li class="nav-item active">
                 <a class="nav-link" href="{% url 'task-add' %}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Add New Task</span></a>
@@ -54,6 +54,16 @@
                 <a class="nav-link" href="{% url 'task-list' %}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>My Tasks</span></a>
+            </li>
+             <li class="nav-item active">
+                <a class="nav-link" href="{% url 'subtask-list' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Sub Tasks</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'notes-list' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Notes</span></a>
             </li>
 
             
