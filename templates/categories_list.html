@@ -69,9 +69,12 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Categories</span></a>
             </li>
-
-            
-            
+             <li class="nav-item active">
+                <a class="nav-link" href="{% url 'priorities-list' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Priorities</span></a>
+            </li>
+        
             
 
         </ul>
@@ -287,7 +290,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Notes</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Categories</h1>
                     </div>
 
                 
@@ -297,15 +300,12 @@
 
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table " id="dataTable" width="100%" cellspacing="50px">
-
+                                <table class="table " id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th class="text-end">Action</th>
                                         </tr>
+                                        <tr></tr>
                                     </thead>
-
                                     <tbody>
                                         {% for object in object_list %}
                                         <tr>

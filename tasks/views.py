@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Task, SubTask, Note, Category
-from .forms import TaskForm, SubTaskForm, NoteForm, CategoryForm
+from .models import Task, SubTask, Note, Category, Priority
+from .forms import TaskForm, SubTaskForm, NoteForm, CategoryForm, PriorityForm
 
 # Create your views here.
 
@@ -59,3 +59,14 @@ class CategoriesUpdateView(UpdateView):
     form_class = CategoryForm
     template_name = 'categories_form.html'
     success_url = reverse_lazy('categories-list')
+
+class PrioritiesListView(ListView):
+    model = Priority
+    template_name = 'priorities_list.html'
+    context_object_name = 'priorities'
+
+class PrioritiesUpdateView(UpdateView):
+    model = Priority
+    form_class = PriorityForm
+    template_name = 'priorities_form.html'
+    success_url = reverse_lazy('priorities-list')
