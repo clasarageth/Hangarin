@@ -64,10 +64,8 @@ class TaskListView(ListView):
         sort_by = self.request.GET.get('sort_by')
         
         if sort_by in allowed:
-            if sort_by == 'deadline':
-                return '-deadline'
-            return sort_by
-        return "-deadline"   
+            return sort_by 
+        return 'deadline' 
 
 
 
