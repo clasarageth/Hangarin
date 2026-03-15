@@ -32,6 +32,12 @@ class SubTaskListView(ListView):
     template_name = 'subtasks_list.html'
     context_object_name = 'subtasks'
 
+class SubTaskCreateView(CreateView):
+    model = SubTask
+    form_class = SubTaskForm
+    template_name = 'subtasks_form.html'
+    success_url = reverse_lazy('subtask-list')
+
 class SubTaskUpdateView(UpdateView):
     model = SubTask
     form_class = SubTaskForm
