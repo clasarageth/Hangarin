@@ -71,6 +71,11 @@ class NotesUpdateView(UpdateView):
     template_name = 'notes_form.html'
     success_url = reverse_lazy('notes-list')
 
+class NotesDeleteView(DeleteView):
+    model = Note
+    template_name = 'notes_del.html'
+    success_url = reverse_lazy('notes-list')
+
 class CategoriesListView(ListView):
     model = Category
     template_name = 'Categories_list.html'
