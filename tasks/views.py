@@ -49,6 +49,12 @@ class NotesListView(ListView):
     template_name = 'notes_list.html'
     context_object_name = 'notes'
 
+class NotesCreateView(CreateView):
+    model = Note
+    form_class = NoteForm
+    template_name = 'notes_form.html'
+    success_url = reverse_lazy('notes-list')
+
 class NotesUpdateView(UpdateView):
     model = Note
     form_class = NoteForm
