@@ -83,6 +83,12 @@ class PrioritiesListView(ListView):
     template_name = 'priorities_list.html'
     context_object_name = 'priorities'
 
+class PrioritiesCreateView(CreateView):
+    model = Priority
+    form_class = PriorityForm
+    template_name = 'priorities_form.html'
+    success_url = reverse_lazy('priorities-list')
+
 class PrioritiesUpdateView(UpdateView):
     model = Priority
     form_class = PriorityForm
