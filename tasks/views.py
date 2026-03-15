@@ -27,34 +27,32 @@ class TaskListView(ListView):
         return qs
 
     def get_context_data(self, **kwargs):
-    
+
         context = super().get_context_data(**kwargs)
         context["total_tasks"] = Task.objects.count()
 
-        today = timezone.now().date()
+        today = timezone.localdate()
 
-        # start of week (Monday)
+        # Monday
         start_week = today - timedelta(days=today.weekday())
 
-        # end of week (Sunday)
+        # Sunday
         end_week = start_week + timedelta(days=6)
 
-        count = Task.objects.filter(
-            deadline__range=(start_week, end_week)
+        tasks_week = Task.objects.filter(
+            deadline__date__range=(start_week, end_week)
         ).count()
 
         tasks_today = Task.objects.filter(
             deadline__date=today
         ).count()
 
-        context["tasks_today"] = tasks_today
-
-        context["tasks_this_week"] = count
-
         completed_tasks = Task.objects.filter(
             status='Completed'
         ).count()
 
+        context["tasks_today"] = tasks_today
+        context["tasks_this_week"] = tasks_week
         context["completed_tasks"] = completed_tasks
 
         return context
