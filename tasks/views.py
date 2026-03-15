@@ -4,6 +4,8 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Task, SubTask, Note, Category, Priority
 from .forms import TaskForm, SubTaskForm, NoteForm, CategoryForm, PriorityForm
+from datetime import timedelta 
+from django.utils import timezone
 
 # Create your views here.
 
@@ -11,6 +13,52 @@ class TaskListView(ListView):
     model = Task
     template_name = 'tasks_list.html'
     context_object_name = 'tasks'
+
+    def get_context_data(self, **kwargs):
+    
+        context = super().get_context_data(**kwargs)
+        context["total_tasks"] = Task.objects.count()
+
+        today = timezone.now().date()
+
+        # start of week (Monday)
+        start_week = today - timedelta(days=today.weekday())
+
+        # end of week (Sunday)
+        end_week = start_week + timedelta(days=6)
+
+        count = Task.objects.filter(
+            deadline__range=(start_week, end_week)
+        ).count()
+
+        tasks_today = Task.objects.filter(
+            deadline__date=today
+        ).count()
+
+        context["tasks_today"] = tasks_today
+
+        context["tasks_this_week"] = count
+
+        completed_tasks = Task.objects.filter(
+            status='Completed'
+        ).count()
+
+        context["completed_tasks"] = completed_tasks
+
+        return context
+    
+        # today = timezone.now().date()
+        # count = (
+        #     OrgMember.objects.filter(
+        #         date_joined__year=today.year
+        #     )
+        #     .values("student")
+        #     .distinct()
+        #     .count()
+        # )
+    
+        # context["students_joined_this_year"] = count
+        # return context
 
 
 
