@@ -6,6 +6,7 @@ from .models import Task, SubTask, Note, Category, Priority
 from .forms import TaskForm, SubTaskForm, NoteForm, CategoryForm, PriorityForm
 from datetime import timedelta 
 from django.utils import timezone
+from django.db.models import Q
 
 # Create your views here.
 
@@ -13,6 +14,17 @@ class TaskListView(ListView):
     model = Task
     template_name = 'tasks_list.html'
     context_object_name = 'tasks'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        query = self.request.GET.get("q")
+
+        if query:
+            qs = qs.filter(
+                Q(title__icontains=query) | 
+                Q(description__icontains=query)
+            )
+        return qs
 
     def get_context_data(self, **kwargs):
     
