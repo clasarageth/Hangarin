@@ -66,6 +66,12 @@ class CategoriesListView(ListView):
     template_name = 'Categories_list.html'
     context_object_name = 'categories'
 
+class CategoriesCreateView(CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'categories_form.html'
+    success_url = reverse_lazy('categories-list')
+
 class CategoriesUpdateView(UpdateView):
     model = Category
     form_class = CategoryForm

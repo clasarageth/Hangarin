@@ -17,7 +17,7 @@ Including another URLconf
 from tasks import views
 from django.contrib import admin
 from django.urls import path
-from tasks.views import TaskListView, TaskCreateView, TaskUpdateView, SubTaskListView, SubTaskUpdateView, NotesListView, NotesUpdateView, CategoriesListView, CategoriesUpdateView, PrioritiesListView, NotesCreateView, PrioritiesUpdateView, SubTaskCreateView
+from tasks.views import TaskListView, TaskCreateView, TaskUpdateView, SubTaskListView, SubTaskUpdateView, NotesListView, NotesUpdateView, CategoriesListView, CategoriesCreateView, CategoriesUpdateView, PrioritiesListView, NotesCreateView, PrioritiesUpdateView, SubTaskCreateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TaskListView.as_view(), name='task-list'),
@@ -30,6 +30,7 @@ urlpatterns = [
     path('notes_list/add', NotesCreateView.as_view(), name='notes-add'),
     path('notes_list/<pk>', NotesUpdateView.as_view(), name='notes-update'),
     path('categories_list/', CategoriesListView.as_view(), name='categories-list'),
+    path('categories_list/add', CategoriesCreateView.as_view(), name='categories-add'),
     path('categories_list/<pk>', CategoriesUpdateView.as_view(), name='categories-update'),
     path('priorities_list/', PrioritiesListView.as_view(), name='priorities-list'),
     path('priorities_list/<pk>', PrioritiesUpdateView.as_view(), name='priorities-update'),
