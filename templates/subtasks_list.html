@@ -315,10 +315,7 @@
                                             <td>{{ object.title }}</td>
                                             <td>{{ object.status }}</td>
                                             <td class="d-flex justify-content-end mb-3"><a href="/subtasks/{{ object.pk }}" class="btn btn-primary btn-sm">View</a>
-                                                <a href="{% url 'subtask-delete' object.pk %}" class="btn btn-danger"><span class="text">Delete</span></a></td>
-                                            <td> </td>
-                                            
-                                        </tr>
+                                                <a href="/subtasks/{{ object.pk }}/delete" class="btn btn-danger"><span class="text">Delete</span></a></td>
                                         {% endfor %}
                                     </tbody>
 

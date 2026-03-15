@@ -45,7 +45,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-             <li class="nav-item active">
+            <li class="nav-item active">
                 <a class="nav-link" href="{% url 'task-add' %}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Add New Task</span></a>
@@ -75,8 +75,6 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Priorities</span></a>
             </li>
-            
-            
 
         </ul>
         <!-- End of Sidebar -->
@@ -291,37 +289,26 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">My Tasks</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Task</h1>
                     </div>
 
                 
 
                     <!-- Content Row -->
                     <div class="card shadow mb-4">
-
+                        
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table " id="dataTable" width="100%" cellspacing="0">
+                           <form action="" method="post" novalidate>
+                                <p>Are you sure you want to delete "{{ object }}"?</p>
+                                {% csrf_token %}
+                                {% include 'includes/form.html' %}
 
-                                     <thead>
-                                        
-                                    </thead>
-
-                                    <tbody>
-                                        {% for object in object_list %}
-                                        <tr>
-                                            <td>{{ object.title }}</td>
-                                            <td class="d-flex justify-content-end mb-3">
-                                                <a href="task_list/{{ object.id }}" class="btn btn-primary btn-sm">View</a>
-                                                <a href="task_list/{{ object.id }}/delete" class="btn btn-danger">Delete</a>
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-
-                                </table>
-
-                            </div>
+                                <div class="form-group">
+                                    <div class="col-md-12 col-sm-3">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
 
 </div>
