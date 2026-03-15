@@ -44,6 +44,11 @@ class SubTaskUpdateView(UpdateView):
     template_name = 'subtasks_form.html'
     success_url = reverse_lazy('subtask-list')
 
+class SubTaskDeleteView(DeleteView):
+    model = SubTask
+    template_name = 'subtasks_del.html'
+    success_url = reverse_lazy('subtask-list')
+
 class NotesListView(ListView):
     model = Note
     template_name = 'notes_list.html'
