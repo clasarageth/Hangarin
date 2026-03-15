@@ -59,18 +59,15 @@ class TaskListView(ListView):
 
         return context
     
-        # today = timezone.now().date()
-        # count = (
-        #     OrgMember.objects.filter(
-        #         date_joined__year=today.year
-        #     )
-        #     .values("student")
-        #     .distinct()
-        #     .count()
-        # )
-    
-        # context["students_joined_this_year"] = count
-        # return context
+    def get_ordering(self):
+        allowed = ['deadline', 'status', 'category__name', 'priority__name']
+        sort_by = self.request.GET.get('sort_by')
+        
+        if sort_by in allowed:
+            if sort_by == 'deadline':
+                return '-deadline'
+            return sort_by
+        return "-deadline"   
 
 
 

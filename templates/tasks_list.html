@@ -388,13 +388,41 @@
                                 <table class="table " id="dataTable" width="100%" cellspacing="0">
 
                                      <thead>
-                                        
+                                        <tr>
+                                            <th colspan="6">
+                                                <div class="d-flex justify-content-end">
+
+                                                    <form method="GET" action="{% url 'task-list' %}" class="form-inline">
+
+                                                        <!--SORT BY -->
+                                                        <select name="sort_by" class="form-control mr-2">
+                                                            <option value="">Sort By</option>
+                                                            <option value="deadline" {% if request.GET.sort_by == "deadline" %}selected{% endif %}>Deadline</option>
+                                                            <option value="status" {% if request.GET.sort_by == "status" %}selected{% endif %}>Status</option>
+                                                            <option value="category__name" {% if request.GET.sort_by == "category__name" %}selected{% endif %}>Category</option>
+                                                            <option value="priority__name" {% if request.GET.sort_by == "priority__name" %}selected{% endif %}>Priority</option>
+                                                        </select>
+
+
+                                                        <button class="btn btn-primary" type="submit">
+                                                            <i class="fas fa-filter"></i>
+                                                        </button>
+
+                                                    </form>
+
+                                                </div>
+                                            </th>
+                                        </tr>
                                     </thead>
 
                                     <tbody>
                                         {% for object in object_list %}
                                         <tr>
                                             <td>{{ object.title }}</td>
+                                            <td>{{ object.deadline }}</td>
+                                            <td>{{ object.status }}</td>
+                                            <td>{{ object.category }}</td>
+                                            <td>{{ object.priority }}</td>
                                             <td class="d-flex justify-content-end mb-3">
                                                 <a href="task_list/{{ object.id }}" class="btn btn-primary btn-sm">View</a>
                                                 <a href="task_list/{{ object.id }}/delete" class="btn btn-danger">Delete</a>
