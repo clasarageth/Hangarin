@@ -18,8 +18,10 @@ from tasks import views
 from django.contrib import admin
 from django.urls import path
 from tasks.views import TaskListView, TaskCreateView, TaskUpdateView,TaskDeleteView,PrioritiesDeleteView, CategoriesDeleteView, NotesDeleteView,SubTaskDeleteView, SubTaskListView, SubTaskUpdateView, NotesListView, NotesUpdateView, CategoriesListView, CategoriesCreateView, CategoriesUpdateView, PrioritiesListView, NotesCreateView, PrioritiesUpdateView, SubTaskCreateView, PrioritiesCreateView
+from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("accounts/", include("allauth.urls")), # allauth routes
     path('', TaskListView.as_view(), name='task-list'),
     path('task_list/add', TaskCreateView.as_view(), name='task-add'),
     path('task_list/<pk>', TaskUpdateView.as_view(), name='task-update'),
