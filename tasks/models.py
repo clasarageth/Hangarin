@@ -49,9 +49,10 @@ class Task(BaseModel):
     )
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    priority = models.ForeignKey(Priority, on_delete=models.CASCADE)
+    priority = models.ForeignKey(Priority, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
+
         return self.title
 
 
