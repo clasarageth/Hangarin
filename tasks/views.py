@@ -93,6 +93,11 @@ class CategoriesUpdateView(UpdateView):
     template_name = 'categories_form.html'
     success_url = reverse_lazy('categories-list')
 
+class CategoriesDeleteView(DeleteView):
+    model = Category
+    template_name = 'categories_del.html'
+    success_url = reverse_lazy('categories-list')
+
 class PrioritiesListView(ListView):
     model = Priority
     template_name = 'priorities_list.html'
