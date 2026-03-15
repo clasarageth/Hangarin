@@ -44,6 +44,7 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
+            <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'task-add' %}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -69,14 +70,11 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Categories</span></a>
             </li>
-            <li class="nav-item active">
+             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'priorities-list' %}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Priorities</span></a>
             </li>
-            
-            
-            
 
         </ul>
         <!-- End of Sidebar -->
@@ -298,31 +296,19 @@
 
                     <!-- Content Row -->
                     <div class="card shadow mb-4">
-
+                        
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <div class="d-flex justify-content-end mb-3">
-                                        <a href="{% url 'priorities-add' %}" class="btn btn-primary" >Add Priority</a>
+                           <form action="" method="post" novalidate>
+                                <p>Are you sure you want to delete "{{ object }}"?</p>
+                                {% csrf_token %}
+                                {% include 'includes/form.html' %}
+
+                                <div class="form-group">
+                                    <div class="col-md-12 col-sm-3">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </div>
                                 </div>
-                                <table class="table " id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                        </tr>
-                                        <tr></tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for object in object_list %}
-                                        <tr>
-                                            <td>{{ object.name }}</td>
-                                            <td class="d-flex justify-content-end mb-3"><a href="/priorities_list/{{ object.id }}" class="btn btn-primary btn-sm">Edit</a>
-                                                <a href="/priorities_list/{{ object.id }}/delete" class="btn btn-danger"><span class="text">Delete</span></a></td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-
-                                </table>
-
-                            </div>
+                            </form>
                         </div>
 
 </div>

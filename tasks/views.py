@@ -114,3 +114,8 @@ class PrioritiesUpdateView(UpdateView):
     form_class = PriorityForm
     template_name = 'priorities_form.html'
     success_url = reverse_lazy('priorities-list')
+
+class PrioritiesDeleteView(DeleteView):
+    model = Priority
+    template_name = 'priorities_del.html'
+    success_url = reverse_lazy('priorities-list')
