@@ -28,6 +28,8 @@ class TaskListView(ListView):
 
     def get_context_data(self, **kwargs):
 
+        
+
         context = super().get_context_data(**kwargs)
         context["total_tasks"] = Task.objects.count()
 
@@ -131,7 +133,7 @@ class NotesDeleteView(DeleteView):
 
 class CategoriesListView(ListView):
     model = Category
-    template_name = 'Categories_list.html'
+    template_name = 'categories_list.html'
     context_object_name = 'categories'
 
 class CategoriesCreateView(CreateView):
