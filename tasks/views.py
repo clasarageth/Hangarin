@@ -74,7 +74,7 @@ class TaskListView(ListView):
                     When(priority__name='Medium', then=Value(3)),
                     When(priority__name='Low', then=Value(4)),
                     When(priority__name=None, then=Value(5)),
-                    default=Value(5),
+                    default=Value(4),
                     output_field=IntegerField(),
                 )
             ).order_by('priority_order')
