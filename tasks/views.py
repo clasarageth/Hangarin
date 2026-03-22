@@ -7,6 +7,7 @@ from .forms import TaskForm, SubTaskForm, NoteForm, CategoryForm, PriorityForm
 from datetime import timedelta 
 from django.utils import timezone
 from django.db.models import Q
+from django.db.models import Case, When, Value, IntegerField    
 
 # Create your views here.
 
@@ -59,13 +60,28 @@ class TaskListView(ListView):
 
         return context
     
-    def get_ordering(self):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        
         allowed = ['deadline', 'status', 'category__name', 'priority__name']
         sort_by = self.request.GET.get('sort_by')
+
+        if sort_by == 'priority__name':
+            return qs.annotate(
+                priority_order=Case(
+                    When(priority__name='Critical', then=Value(1)),
+                    When(priority__name='High', then=Value(2)),
+                    When(priority__name='Medium', then=Value(3)),
+                    When(priority__name='Low', then=Value(4)),
+                    When(priority__name=None, then=Value(5)),
+                    default=Value(5),
+                    output_field=IntegerField(),
+                )
+            ).order_by('priority_order')
         
         if sort_by in allowed:
-            return sort_by 
-        return 'deadline' 
+            return qs.order_by(sort_by)
+        return qs.order_by('deadline')
 
 
 
