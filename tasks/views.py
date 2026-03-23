@@ -7,11 +7,12 @@ from .forms import TaskForm, SubTaskForm, NoteForm, CategoryForm, PriorityForm
 from datetime import timedelta 
 from django.utils import timezone
 from django.db.models import Q
-from django.db.models import Case, When, Value, IntegerField    
+from django.db.models import Case, When, Value, IntegerField  
+from django.contrib.auth.mixins import LoginRequiredMixin  
 
 # Create your views here.
 
-class TaskListView(ListView):
+class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = 'tasks_list.html'
     context_object_name = 'object_list'
