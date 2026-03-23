@@ -14,75 +14,74 @@ from django.db.models import Case, When, Value, IntegerField
 class TaskListView(ListView):
     model = Task
     template_name = 'tasks_list.html'
-    context_object_name = 'tasks'
+    context_object_name = 'object_list'
 
     def get_queryset(self):
         qs = super().get_queryset()
-        query = self.request.GET.get("q")
 
+        # SEARCH
+        query = self.request.GET.get("q")
         if query:
             qs = qs.filter(
-                Q(title__icontains=query) | 
+                Q(title__icontains=query) |
                 Q(description__icontains=query)
             )
-        return qs
 
-    def get_context_data(self, **kwargs):
+        # FILTERS
+        status = self.request.GET.get('status')
+        category = self.request.GET.get('category')
+        priority = self.request.GET.get('priority')
 
-        
+        if status:
+            qs = qs.filter(status=status)
 
-        context = super().get_context_data(**kwargs)
-        context["total_tasks"] = Task.objects.count()
+        if category:
+            qs = qs.filter(category__name=category)
 
-        today = timezone.localdate()
+        if priority:
+            qs = qs.filter(priority__name=priority)
 
-        # Monday
-        start_week = today - timedelta(days=today.weekday())
-
-        # Sunday
-        end_week = start_week + timedelta(days=6)
-
-        tasks_week = Task.objects.filter(
-            deadline__date__range=(start_week, end_week)
-        ).count()
-
-        tasks_today = Task.objects.filter(
-            deadline__date=today
-        ).count()
-
-        completed_tasks = Task.objects.filter(
-            status='Completed'
-        ).count()
-
-        context["tasks_today"] = tasks_today
-        context["tasks_this_week"] = tasks_week
-        context["completed_tasks"] = completed_tasks
-
-        return context
-    
-    def get_queryset(self):
-        qs = super().get_queryset()
-        
-        allowed = ['deadline', 'status', 'category__name', 'priority__name']
+        # SORTING
+        allowed = ['deadline', 'status', 'category__name']
         sort_by = self.request.GET.get('sort_by')
 
         if sort_by == 'priority__name':
-            return qs.annotate(
+            qs = qs.annotate(
                 priority_order=Case(
                     When(priority__name='Critical', then=Value(1)),
                     When(priority__name='High', then=Value(2)),
                     When(priority__name='Medium', then=Value(3)),
                     When(priority__name='Low', then=Value(4)),
-                    When(priority__name=None, then=Value(5)),
+                    When(priority__name__isnull=True, then=Value(5)),
                     default=Value(4),
                     output_field=IntegerField(),
                 )
             ).order_by('priority_order')
-        
-        if sort_by in allowed:
-            return qs.order_by(sort_by)
-        return qs.order_by('deadline')
 
+        elif sort_by in allowed:
+            qs = qs.order_by(sort_by)
+
+        else:
+            qs = qs.order_by('deadline')
+
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["total_tasks"] = Task.objects.count()
+
+        today = timezone.localdate()
+        start_week = today - timedelta(days=today.weekday())
+        end_week = start_week + timedelta(days=6)
+
+        context["tasks_today"] = Task.objects.filter(deadline__date=today).count()
+        context["tasks_this_week"] = Task.objects.filter(
+            deadline__date__range=(start_week, end_week)
+        ).count()
+        context["completed_tasks"] = Task.objects.filter(status='Completed').count()
+
+        return context
 
 
 class TaskCreateView(CreateView):

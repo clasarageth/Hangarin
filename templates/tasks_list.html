@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block content %}
-<div class="container-fluid">
+
+<div class="container-fluid px-4">
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -98,51 +99,57 @@
 
     </div>
 
+    <!-- FILTER + SORT BAR -->
+    <div class="d-flex justify-content-end mb-3">
 
-    <!-- Task Table -->
+        <form method="GET" action="{% url 'task-list' %}" class="form-inline">
+
+            <!-- STATUS FILTER -->
+            <select name="status" class="form-control mr-2">
+                <option value="">All Status</option>
+                <option value="Pending" {% if request.GET.status == "Pending" %}selected{% endif %}>Pending</option>
+                <option value="In Progress" {% if request.GET.status == "In Progress" %}selected{% endif %}>In Progress</option>
+                <option value="Completed" {% if request.GET.status == "Completed" %}selected{% endif %}>Completed</option>
+            </select>
+
+            <!-- CATEGORY FILTER -->
+            <select name="category" class="form-control mr-2">
+                <option value="">All Category</option>
+                <option value="Work" {% if request.GET.category == "Work" %}selected{% endif %}>Work</option>
+                <option value="School" {% if request.GET.category == "School" %}selected{% endif %}>School</option>
+                <option value="Finance" {% if request.GET.category == "Finance" %}selected{% endif %}>Finance</option>
+                <option value="Personal" {% if request.GET.category == "Personal" %}selected{% endif %}>Personal</option>
+                <option value="Projects" {% if request.GET.category == "Projects" %}selected{% endif %}>Projects</option>
+            </select>
+
+            <!-- PRIORITY FILTER -->
+            <select name="priority" class="form-control mr-2">
+                <option value="">All Priority</option>
+                <option value="Low" {% if request.GET.priority == "Low" %}selected{% endif %}>Low</option>
+                <option value="Medium" {% if request.GET.priority == "Medium" %}selected{% endif %}>Medium</option>
+                <option value="High" {% if request.GET.priority == "High" %}selected{% endif %}>High</option>
+                <option value="Critical" {% if request.GET.priority == "Critical" %}selected{% endif %}>Critical</option>
+            </select>
+
+            <!-- SORT -->
+            <select name="sort_by" class="form-control mr-2">
+                <option value="">Sort By</option>
+                <option value="deadline" {% if request.GET.sort_by == "deadline" %}selected{% endif %}>Deadline</option>
+                <option value="title" {% if request.GET.sort_by == "title" %}selected{% endif %}>Title</option>
+            </select>
+
+            <button class="btn btn-primary" type="submit">
+                <i class="fas fa-filter"></i>
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- TABLE -->
     <div class="card shadow mb-4">
-
         <div class="card-body">
 
-            <!-- Sort Bar -->
-            <div class="d-flex justify-content-end mb-3">
-
-                <form method="GET" action="{% url 'task-list' %}" class="form-inline">
-
-                    <select name="sort_by" class="form-control mr-2">
-                        <option value="">Sort By</option>
-
-                        <option value="deadline"
-                            {% if request.GET.sort_by == "deadline" %}selected{% endif %}>
-                            Deadline
-                        </option>
-
-                        <option value="status"
-                            {% if request.GET.sort_by == "status" %}selected{% endif %}>
-                            Status
-                        </option>
-
-                        <option value="category__name"
-                            {% if request.GET.sort_by == "category__name" %}selected{% endif %}>
-                            Category
-                        </option>
-
-                        <option value="priority__name"
-                            {% if request.GET.sort_by == "priority__name" %}selected{% endif %}>
-                            Priority
-                        </option>
-
-                    </select>
-
-                    <button class="btn btn-primary" type="submit">
-                        <i class="fas fa-filter"></i>
-                    </button>
-
-                </form>
-
-            </div>
-
-            <!-- Table -->
             <div class="table-responsive">
 
                 <table class="table table-hover" width="100%" cellspacing="0">
@@ -159,35 +166,53 @@
                     </thead>
 
                     <tbody>
-
                         {% for object in object_list %}
-
                         <tr>
 
                             <td>{{ object.title }}</td>
                             <td>{{ object.deadline }}</td>
-                            <td>{{ object.status }}</td>
+
+                            <!-- STATUS BADGE -->
+                            <td>
+                                {% if object.status == "Pending" %}
+                                    <span class="badge badge-secondary">Pending</span>
+                                {% elif object.status == "In Progress" %}
+                                    <span class="badge badge-info">In Progress</span>
+                                {% elif object.status == "Completed" %}
+                                    <span class="badge badge-success">Completed</span>
+                                {% else %}
+                                    <span class="badge badge-dark">{{ object.status }}</span>
+                                {% endif %}
+                            </td>
+
                             <td>{{ object.category }}</td>
-                            <td>{{ object.priority }}</td>
+
+                            <!-- PRIORITY BADGE -->
+                            <td>
+                                {% if object.priority.name == "Critical" %}
+                                    <span class="badge badge-dark">Critical</span>
+                                {% elif object.priority.name == "High" %}
+                                    <span class="badge badge-danger">High</span>
+                                {% elif object.priority.name == "Medium" %}
+                                    <span class="badge badge-warning">Medium</span>
+                                {% elif object.priority.name == "Low" %}
+                                    <span class="badge badge-success">Low</span>
+                                {% else %}
+                                    <span class="badge badge-secondary">{{ object.priority }}</span>
+                                {% endif %}
+                            </td>
 
                             <td class="text-right">
-
-                                <a href="task_list/{{ object.id }}"
-                                   class="btn btn-primary btn-sm mr-1">
-                                   View
+                                <a href="task_list/{{ object.id }}" class="btn btn-primary btn-sm mr-1">
+                                    View
                                 </a>
-
-                                <a href="task_list/{{ object.id }}/delete"
-                                   class="btn btn-danger btn-sm">
-                                   Delete
+                                <a href="task_list/{{ object.id }}/delete" class="btn btn-danger btn-sm">
+                                    Delete
                                 </a>
-
                             </td>
 
                         </tr>
-
                         {% endfor %}
-
                     </tbody>
 
                 </table>
@@ -195,8 +220,8 @@
             </div>
 
         </div>
-
     </div>
 
 </div>
+
 {% endblock %}
