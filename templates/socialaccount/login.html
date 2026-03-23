@@ -12,16 +12,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" />
 
-    <style>a
+    <style>
         body {
+            margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #f8f9fc;
         }
 
         .auth-card {
+            width: 100%;
             max-width: 500px;
             background: #fff;
             border-radius: 12px;
@@ -33,6 +35,7 @@
 </head>
 
 <body>
+
     <div class="auth-card">
         <h3 class="mb-4">Confirm Sign In</h3>
 
@@ -44,16 +47,15 @@
         <form method="post">
             {% csrf_token %}
 
-            <button type="submit"
-                    class="btn btn-primary btn-block mb-3">
+            <button type="submit" class="btn btn-primary btn-block mb-3">
                 Continue with {{ provider.name }}
             </button>
         </form>
 
-        <a href="{% url 'account_login' %}"
-           class="btn btn-outline-secondary btn-block">
+        <a href="{% url 'account_login' %}" class="btn btn-outline-secondary btn-block">
             Cancel
         </a>
     </div>
+
 </body>
 </html>
